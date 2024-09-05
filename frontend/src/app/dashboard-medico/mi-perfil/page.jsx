@@ -7,11 +7,13 @@ import React, { useEffect, useState } from 'react'
 
 const MiPerfilMedico = () => {
   const [state,setPerfil] = useState([])
-  const token = localStorage.getItem('token') || ''
-  const idperfil = jwtDecode(token)
+  
  useEffect(()=>{
+  const token = localStorage.getItem('token') || ''
+  const  perfil  = jwtDecode(token) 
+  console.log(perfil, token)
    try{
-     fetch(`https://backend-justina-deploy.onrender.com/v1/api/medical-staff/${idperfil.id}`,{
+     fetch(`https://backend-justina-deploy.onrender.com/v1/api/medical-staff/${perfil.id}`,{
        method: "GET",
        headers:{
          'Content-Type': 'application/json',
