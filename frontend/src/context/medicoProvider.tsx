@@ -1,4 +1,4 @@
-
+'use client'
 import { jwtDecode } from 'jwt-decode'
 import React, { createContext, useContext, useReducer, ReactNode, useEffect, useState } from 'react'
 

@@ -1,4 +1,4 @@
-'use client';
+"use client"
 import { Separator } from '@/components/ui/separator'
 import { TabsContent } from '@/components/ui/tabs'
 import React, { useEffect, useState } from 'react'
@@ -45,27 +45,26 @@ interface MyJwtPayload extends JwtPayload {
 
 const AgendaHoy = () => {
   const [pacienteActivo, setPacienteActivo] = useState('')
-  const token = localStorage.getItem('token') || null
-
-  const decoded = jwtDecode<MyJwtPayload>(token ? token : '')
-  const { isPending, error, data, refetch } = useQuery({
-    queryKey: ['appointments'],
-    queryFn: () =>
-      fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getByMedicalStaff/${decoded?.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).then((res) => res.json()),
-    enabled: !!decoded?.id
-  })
+  
+  
 
   useEffect(() => {
-    if (token) {
-      refetch()
-    }
-  }, [token, refetch])
+    const token = localStorage.getItem('token') || '' 
 
-  console.log(data);
+  const decoded:{id:string} = jwtDecode(token)
+    try 
+    {
+      fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getAll`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res) => res.json())
+     .then(data => console.log(data))
+    } catch (e){
+      console.error(e);
+    }
+  }, [])
+
   
 
   return (
