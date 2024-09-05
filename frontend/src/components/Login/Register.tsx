@@ -80,7 +80,7 @@ export default function Register({ isRegister: register = true }) {
       const res = await response.json()
       console.log(res)
     } catch (error) {
-      console.error('Ocurio un error ', error)
+      console.error('Ocurio un error aqui', error)
     }
     console.log(values)
   }
