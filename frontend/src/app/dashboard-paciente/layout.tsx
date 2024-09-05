@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </aside>
         <Drawer open={isOpen} onClose={toggleDrawer} size={350} direction='left' className='bla bla bla'>
           <SideBar>
-            {rutasUser.map((item: { texto: Key | string | undefined; href: string; icon: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined }) => {
+            {rutasUser.map((item: { texto: string; href: string; icon: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined }) => {
               return <SideBarLink key={item.texto} href={item.href} icon={item.icon} texto={item.texto} />
             })}
           </SideBar>
