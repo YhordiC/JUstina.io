@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Separator } from '@/components/ui/separator'
 import { TabsContent } from '@/components/ui/tabs'
 import React, { useEffect, useState } from 'react'
@@ -45,7 +45,7 @@ interface MyJwtPayload extends JwtPayload {
 
 const AgendaHoy = () => {
   const [pacienteActivo, setPacienteActivo] = useState('')
-  const token = window.localStorage.getItem('token') || null
+  const token = localStorage.getItem('token') || null
 
   const decoded = jwtDecode<MyJwtPayload>(token ? token : '')
   const { isPending, error, data, refetch } = useQuery({

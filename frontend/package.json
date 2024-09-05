@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.25.2",
     "@formkit/tempo": "^0.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@nextui-org/progress": "^2.0.33",
@@ -30,6 +31,7 @@
     "@tanstack/react-query": "^5.51.16",
     "@tanstack/react-table": "^8.19.3",
     "autoprefixer": "^10.4.19",
+    "babel-preset-next": "^1.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -38,7 +40,7 @@
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.408.0",
-    "next": "14.2.4",
+    "next": "^14.2.4",
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
