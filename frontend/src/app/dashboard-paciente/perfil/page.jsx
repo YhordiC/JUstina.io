@@ -1,4 +1,4 @@
-`use client`;
+"use client";
 import { User2Icon } from 'lucide-react'
 import Image from 'next/image'
 import TarjetaTurno from '@/components/ui/Perfil/TarjetaTurno'
