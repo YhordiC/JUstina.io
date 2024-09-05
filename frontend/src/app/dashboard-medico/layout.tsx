@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 })}
               </SideBar>
             </Drawer>
-            <ContainerData>{children}</ContainerData>
+            <ContainerData className=''>{children}</ContainerData>
           </section>
           <span className='fixed bottom-4 right-4 lg:hidden'>
             <Button onClick={toggleDrawer}>
