@@ -2,11 +2,31 @@
 import SimpleDisplayData from '@/components/SimpleDisplayData.tsx/SimpleDisplayData'
 import { Separator } from '@/components/ui/separator'
 import { useStaffContext } from '@/context/medicoProvider'
-import React from 'react'
+import { jwtDecode } from 'jwt-decode'
+import React, { useEffect, useState } from 'react'
 
 const MiPerfilMedico = () => {
-  const { state } = useStaffContext()
-
+  const [state,setPerfil] = useState([])
+  const token = localStorage.getItem('token') || ''
+  const idperfil = jwtDecode(token)
+ useEffect(()=>{
+   try{
+     fetch(`https://backend-justina-deploy.onrender.com/v1/api/medical-staff/${idperfil.id}`,{
+       method: "GET",
+       headers:{
+         'Content-Type': 'application/json',
+         Authorization: 'Bearer ' + token
+       }
+     })
+     .then( res => res.json())
+     .then( datos => { 
+       console.log(datos)
+       setPerfil(datos)})
+   }catch(e){
+     console.error(e, 'Hubo un error')
+   }
+ },[])
+console.log(state)
   return (
     <div>
       <h3 className='mb-2 text-3xl font-bold'>Mi Perfil</h3>
