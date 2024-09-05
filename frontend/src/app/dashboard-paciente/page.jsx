@@ -97,9 +97,8 @@ const MainDashboard = () => {
     setTratamientosPendientes(pendiente)
     setTratamientosRealizados(realizados)
   } */
-    const [tokenAdmin, setTokenAdmin] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlzcyI6Imp1c3RpbmEuaW8iLCJpZCI6MSwiZXhwIjoxNzIzMTU5OTk2LCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl19.lTMF3HAVueNVs9k4blOjXC28f870VyaUCykqo8kivw8')
- 
-  function Cancelar(id: number) {
+  
+  function Cancelar(id) {
     setidTurno(id)
     setCancelarTurno(!cancelarTurno)
   }
@@ -110,7 +109,7 @@ const MainDashboard = () => {
       void fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getByPatient/${datosperfil.id}`,{
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${tokenAdmin}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       }).then( async response => await response.json())
