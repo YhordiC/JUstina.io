@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/lib/perfil_actions.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/lib/perfil_actions.js", "src/app/dashboard-medico/mi-perfil/page.jsx", "src/app/dashboard-paciente/page.jsx"],
   "exclude": ["node_modules"]
 }

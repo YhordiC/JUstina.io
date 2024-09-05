@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { string, z } from 'zod'
 import {ObtenerHora} from '@/app/lib/Date'
 import { jwtDecode } from 'jwt-decode'
 const Formshema = z.object({
@@ -21,8 +21,7 @@ const Formshema = z.object({
 })
 export default function Turno() {
   const [datosMedicos, setDatosMedicos] = useState([])
-  const [tokenAdmin, setTokenAdmin] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlzcyI6Imp1c3RpbmEuaW8iLCJpZCI6MSwiZXhwIjoxNzIzMTU5OTk2LCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl19.lTMF3HAVueNVs9k4blOjXC28f870VyaUCykqo8kivw8')
-  const form = useForm<z.infer<typeof Formshema>>({
+   const form = useForm<z.infer<typeof Formshema>>({
     resolver: zodResolver(Formshema),
     defaultValues: {
       descripcion: '',
@@ -31,7 +30,7 @@ export default function Turno() {
   })
   function onSubmit( value:z.infer<typeof Formshema>) {
     const localToken = localStorage.getItem('token' ) ?? ''
-    const datosperfil  = jwtDecode(localToken)
+    let datosperfil:{id:string} = jwtDecode(localToken) // si typeScript te molesta con que tu propiedad no existe
     const [timeString] = ObtenerHora()
     console.log(timeString)
     const values = {
@@ -48,7 +47,7 @@ export default function Turno() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${tokenAdmin}`
+          Authorization: `Bearer ${localToken}`
         },
         body: JSON.stringify(values)
 
@@ -75,10 +74,10 @@ export default function Turno() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + tokenAdmin
+          Authorization: 'Bearer ' + localToken
         }
       })
-        .then(async respuesta => await respuesta.json())
+        .then( respuesta =>  respuesta.json())
         .then( datoMedicos => setDatosMedicos(datoMedicos))
     } 
     catch (eror){
@@ -105,7 +104,7 @@ export default function Turno() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {datosMedicos.map((item) => (
+                    {datosMedicos.map((item:{id:string, firstName:string, lastName:string, specialities:string}) => (
                       <SelectItem className='' key={item.id} value={item.id}>
                         {item.firstName} {item.lastName}
                         <span>{item.specialities}</span>

@@ -1,4 +1,7 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react'
+
+import { jwtDecode } from 'jwt-decode'
+import React, { createContext, useContext, useReducer, ReactNode, useEffect, useState } from 'react'
+
 
 interface UserMedico {
   id: number | null
@@ -29,7 +32,17 @@ interface StaffContextType {
   dispatch: React.Dispatch<any>
 }
 
-const StaffProvider = createContext<StaffContextType | undefined>(undefined)
+const StaffProvider = createContext<StaffContextType | object>( {
+  id: 1,
+  firstName: 'Yhordi',
+  lastName: 'Choque',
+  email: '@gmail.com',
+  phone: 78456,
+  medicalRegistrationNumber: 123456,
+  specialities: 'Cardiologo',
+  description: 'El mejor del mundo',
+  active: true
+})
 
 const reducer = (state: UserMedico, action: any) => {
 
@@ -50,6 +63,7 @@ const useStaffContext = () => {
 }
 
 const MedicoProvider = ({ children }: { children: ReactNode }) => {
+ 
   const [state, dispatch] = useReducer(reducer, initialState)
   return <StaffProvider.Provider value={{ state, dispatch }}>{children}</StaffProvider.Provider>
 }

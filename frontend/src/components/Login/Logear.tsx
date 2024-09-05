@@ -59,7 +59,7 @@ export default function Login() {
       const token = await response.json()
       localStorage.setItem('token', token.jwtToken)
       console.log(token)
-      const decoded = jwtDecode(token.jwtToken)
+      const decoded:{role:string} = jwtDecode(token.jwtToken)
       console.log(decoded)
       Enviar(decoded.role)
     } catch (error) {
