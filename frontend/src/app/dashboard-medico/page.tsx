@@ -1,4 +1,4 @@
-'use-client'
+"use client"
 import AgendaHoy from '@/components/pages/medico/turnos/AgendaHoy'
 import AgendaSemana from '@/components/pages/medico/turnos/AgendaSemana'
 import SimpleDisplayData from '@/components/SimpleDisplayData.tsx/SimpleDisplayData'

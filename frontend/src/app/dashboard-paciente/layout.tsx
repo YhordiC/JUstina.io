@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import ContainerData from '@/components/ContainerData/ContainerData'
 import MedicTime from '@/components/iconsComponents/MedicTime'
 import UserIcon from '@/components/iconsComponents/UserIcon'
