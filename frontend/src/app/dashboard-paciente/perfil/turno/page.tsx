@@ -6,11 +6,13 @@ import { Toaster } from '@/components/ui/toaster'
 import { toast } from '@/components/ui/use-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { string, z } from 'zod'
 import {ObtenerHora} from '@/app/lib/Date'
 import { jwtDecode } from 'jwt-decode'
+import { TokenContext } from '@/context/TokenProvider'
+
 const Formshema = z.object({
   descripcion: z.string().min(15, {
     message: 'Por favor la descripción tiene que ser mayor 15 caracteres'
@@ -19,7 +21,10 @@ const Formshema = z.object({
   }),
   idMedicalStaff: z.string()
 })
+
 export default function Turno() {
+
+  const token = useContext(TokenContext) // contexto de token
   const [datosMedicos, setDatosMedicos] = useState([])
    const form = useForm<z.infer<typeof Formshema>>({
     resolver: zodResolver(Formshema),
@@ -29,8 +34,7 @@ export default function Turno() {
     }
   })
   function onSubmit( value:z.infer<typeof Formshema>) {
-    const localToken = localStorage.getItem('token' ) ?? ''
-    let datosperfil:{id:string} = jwtDecode(localToken) // si typeScript te molesta con que tu propiedad no existe
+    let datosperfil:{id:string} = jwtDecode(token) // si typeScript te molesta con que tu propiedad no existe
     const [timeString] = ObtenerHora()
     console.log(timeString)
     const values = {
@@ -39,15 +43,15 @@ export default function Turno() {
       reason: 'SEGUIMIENTO',
       description: value.descripcion,
       healthCenter: 'Buenos Aires Medical Center',
-      date: `2024-10-28${timeString}`
+      date: `2024-12-28${timeString}`
     }
     console.log(value.idMedicalStaff)
     try {
-      void fetch('https://backend-justina-deploy.onrender.com/v1/api/appointment/register', {
+       fetch('https://backend-justina-deploy.onrender.com/v1/api/appointment/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localToken}`
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(values)
 
@@ -74,7 +78,7 @@ export default function Turno() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localToken
+          Authorization: 'Bearer ' + token
         }
       })
         .then( respuesta =>  respuesta.json())

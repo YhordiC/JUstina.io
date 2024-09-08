@@ -2,12 +2,15 @@
 import { User2Icon } from 'lucide-react'
 import Image from 'next/image'
 import TarjetaTurno from '@/components/ui/Perfil/TarjetaTurno'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { jwtDecode } from 'jwt-decode'
+import {TokenContext} from '@/context/TokenProvider'
 export default function PerfilPage() {
+
   const [perfil, setPerfil] = useState([])
+  const token = useContext(TokenContext) // contexto de token
+  
   useEffect(() => {
-    const token = localStorage.getItem('token') || ''
     console.log(token)
     const idperfil = jwtDecode(token)
     fetch(`https://backend-justina-deploy.onrender.com/v1/api/patient/${idperfil.id}`,{

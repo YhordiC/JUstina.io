@@ -4,14 +4,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import TarjetaTurno from '@/components/ui/Perfil/TarjetaTurno'
 import { cn } from '@/lib/utils'
 import { CheckIcon, DeleteIcon } from 'lucide-react'
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import Cancelarconsulta from '@/components/ui/Paciente/Cancelarconsulta'
 import { jwtDecode } from 'jwt-decode'
+import { TokenContext } from '@/context/TokenProvider'
 
 const MainDashboard = () => {
   const [Turnos, setTurnos] = useState([])
   const [cancelarTurno, setCancelarTurno] = useState(false)
   const [idTurno, setidTurno]  = useState(0)
+  const token = useContext(TokenContext) // contexto de token
 // const [TratamientosRealizados,setTratamientosRealizados] = useState(0)
 // const [TratamientosPendientes,setTratamientosPendientes] = useState(0)
   
@@ -102,11 +104,14 @@ const MainDashboard = () => {
     setidTurno(id)
     setCancelarTurno(!cancelarTurno)
   }
+
+ 
     useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
+   
+    console.log(token)
     const datosperfil  = jwtDecode(token)
     try {
-      void fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getByPatient/${datosperfil.id}`,{
+      void fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getByPatient/2`,{
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
