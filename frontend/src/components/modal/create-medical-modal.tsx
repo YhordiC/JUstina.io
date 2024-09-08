@@ -9,13 +9,14 @@ import {
 } from '@/components/ui/dialog'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2Icon } from 'lucide-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '../ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
 import { toast } from '../ui/use-toast'
+import { TokenContext } from '@/context/TokenProvider'
 
 const medicalSchema = z.object({
   firstName: z.string().min(1, { message: 'El nombre es obligatorio' }),
@@ -34,6 +35,7 @@ const medicalSchema = z.object({
 })
 
 function CreateMedicalModal() {
+  const token = useContext(TokenContext) // contexto de token
   const [isOpen, setIsOpen] = useState(false)
   const form = useForm<z.infer<typeof medicalSchema>>({
     resolver: zodResolver(medicalSchema),
@@ -55,7 +57,7 @@ function CreateMedicalModal() {
       await fetch('https://backend-justina-deploy.onrender.com/v1/api/medical-staff/register', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)

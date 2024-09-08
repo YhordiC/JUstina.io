@@ -2,14 +2,15 @@
 import SimpleDisplayData from '@/components/SimpleDisplayData.tsx/SimpleDisplayData'
 import { Separator } from '@/components/ui/separator'
 import { useStaffContext } from '@/context/medicoProvider'
+import { TokenContext } from '@/context/TokenProvider'
 import { jwtDecode } from 'jwt-decode'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const MiPerfilMedico = () => {
   const [state,setPerfil] = useState([])
+  const token = useContext(TokenContext) // contexto de token
   
  useEffect(()=>{
-  const token = localStorage.getItem('token') || ''
   const  perfil  = jwtDecode(token) 
   console.log(perfil, token)
    try{

@@ -11,7 +11,7 @@ import { HistoryIcon, HomeIcon, MenuIcon } from 'lucide-react'
 import Image from 'next/image'
 import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from 'react'
 import Drawer from 'react-modern-drawer'
-
+import TokenProvider from '@/context/TokenProvider'
 import 'react-modern-drawer/dist/index.css'
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasUser = [
@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setIsOpen((prevState) => !prevState)
   }
   return (
-    <>
+    <TokenProvider>
       <section className='mx-auto flex h-full w-full px-1 py-2 lg:container lg:gap-5 lg:px-0'>
         <aside className='hidden h-full overflow-hidden rounded-[30px] border-r border-gray-400 bg-white lg:relative lg:left-0 lg:block lg:flex-1'>
           <SideBar>
@@ -59,6 +59,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <MenuIcon />
           </Button>
         </span>}
-    </>
+    </ TokenProvider>
   )
 }

@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import Image from 'next/image'
 import { jwtDecode } from 'jwt-decode'
+import { useRouter } from 'next/navigation';
 const formSchema = z.object({
   email: z.string().min(2, {
     message: 'Username must be at least 2 characters'
@@ -28,15 +29,16 @@ export default function Login() {
     }
   })
 
+  const router = useRouter()
   const Enviar = (role = '') => {
     if (role === 'ROLE_PATIENT') {
-      window.location.href = '/dashboard-paciente'
+      router.push('/dashboard-paciente')
       return
     } else if (role === 'ROLE_ADMIN') {
-      window.location.href = '/dashboard'
+      router.push('/dashboard')
       return
     }
-    window.location.href = '/dashboard-medico'
+    router.push('/dashboard-medico')
   }
   const [ErrorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
