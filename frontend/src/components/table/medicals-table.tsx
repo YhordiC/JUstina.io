@@ -11,8 +11,9 @@ import {
 import { Medical } from '@/tipos/database'
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { toast } from '../ui/use-toast'
+import { TokenContext } from '@/context/TokenProvider'
 
 const columns: ColumnDef<Medical>[] = [
   {
@@ -56,11 +57,12 @@ const columns: ColumnDef<Medical>[] = [
       const medical = row.original
 
       const handleOnDisable = async () => {
+        const token = useContext(TokenContext) || "" // contexto de token
         try {
           await fetch(`https://backend-justina-deploy.onrender.com/v1/api/medical-staff/delete/${medical.id}`, {
             method: 'DELETE',
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+              Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({})
@@ -93,14 +95,17 @@ const columns: ColumnDef<Medical>[] = [
 ]
 
 function MedicalsTable() {
+ 
   const [medicals, setMedicals] = useState<Medical[]>([])
-
+  const token = useContext(TokenContext) || "" // contexto de token
+  console.log(token)
   useEffect(() => {
+   
     const getMedicals = async () => {
       const request = await fetch('https://backend-justina-deploy.onrender.com/v1/api/medical-staff/getAll', {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`
+          Authorization: `Bearer ${token}`
         }
       })
       const medicals = await request.json()

@@ -8,10 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { TokenContext } from '@/context/TokenProvider'
 import { Patient } from '@/tipos/database'
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 const columns: ColumnDef<Patient>[] = [
   {
@@ -81,13 +82,13 @@ const columns: ColumnDef<Patient>[] = [
 
 function PatientsTable() {
   const [patients, setPatients] = useState<Patient[]>([])
-
+  const token = useContext(TokenContext) || "" // contexto de token
   useEffect(() => {
     const getPatients = async () => {
       const request = await fetch('https://backend-justina-deploy.onrender.com/v1/api/patient', {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`
+          Authorization: `Bearer ${token}`
         }
       })
       const patients = await request.json()
