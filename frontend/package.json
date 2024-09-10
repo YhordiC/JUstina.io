@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  },
+  }, 
   "dependencies": {
     "@babel/core": "^7.25.2",
     "@formkit/tempo": "^0.1.2",

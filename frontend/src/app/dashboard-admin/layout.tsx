@@ -2,6 +2,7 @@
 import UserIcon from '@/components/iconsComponents/UserIcon'
 import SideBar from '@/components/sidebar/SideBar'
 import SideBarLink from '@/components/sidebar/SideBarLink'
+import TokenProvider from '@/context/TokenProvider'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasUser = [
@@ -12,6 +13,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   ]
 
   return (
+    <TokenProvider>
     <section className='container mx-auto flex h-full gap-5 py-2 pl-0'>
       <aside className='container-sidebar fixed left-[-270px] h-full overflow-hidden rounded-[30px] border-r border-gray-400 bg-white lg:relative lg:left-0 lg:flex-1'>
         <SideBar>
@@ -24,5 +26,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {children}
       </main>
     </section>
+    </TokenProvider>
   )
 }
