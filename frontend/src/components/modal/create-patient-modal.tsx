@@ -59,7 +59,7 @@ function CreatePatientModal() {
 
   const onSubmit = async (data: z.infer<typeof patientSchema>) => {
     try {
-      await fetch('https://backend-justina-deploy.onrender.com/v1/api/patient', {
+      await fetch('https://backend-justina-deploy.onrender.com/api/patient/add', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

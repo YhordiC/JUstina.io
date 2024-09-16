@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  }, 
+  },
   "dependencies": {
     "@babel/core": "^7.25.2",
     "@formkit/tempo": "^0.1.2",
     "@hookform/resolvers": "^3.9.0",
+    "@nextui-org/dropdown": "^2.1.31",
     "@nextui-org/progress": "^2.0.33",
     "@nextui-org/system": "^2.2.5",
     "@nextui-org/theme": "^2.2.9",
