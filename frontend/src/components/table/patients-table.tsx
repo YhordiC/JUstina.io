@@ -14,11 +14,9 @@ import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
 import { useContext, useEffect, useState } from 'react'
 
-
-
 function PatientsTable() {
   const [isOpenMperfil, setOpenMP] = useState(false)
-  const [perfilPaciente, setPerfilPaciente] = useState([])
+  const [perfilPaciente, setPerfilPaciente] = useState<Patient[]>([])
   const columns: ColumnDef<Patient>[] = [
     {
       accessorKey: 'firstName',
@@ -114,7 +112,7 @@ function PatientsTable() {
   function cambiarisOpen() {
     setOpenMP(!isOpenMperfil)
   }
-  return <DataTable columns={columns} data={patients} isOpen={isOpenMperfil} isfuncion={cambiarisOpen} perfilmedico={perfilPaciente} />
+  return <DataTable columns={columns} data={patients} isOpen={isOpenMperfil} isFunction={cambiarisOpen} perfilmedico={perfilPaciente} />
 }
 
 export { PatientsTable }
