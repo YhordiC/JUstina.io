@@ -17,12 +17,12 @@ import { TokenContext } from '@/context/TokenProvider'
 import PerfilMediclal from '@/components/table/Perfil-medical'
 
 function MedicalsTable() {
-  const Token = useContext(TokenContext) || "" // contexto de token
+  const Token = useContext(TokenContext) || '' // contexto de token
   const [isOpenMperfil, setOpenMP] = useState(false)
-  const [perfilMedico, setPerfilMedico] = useState([])
+  const [perfilMedico, setPerfilMedico] = useState<Medical[]>([])
 
   
-  const columns: ColumnDef<Medical>[] = 
+  const columns: ColumnDef<Medical>[] =
   [
     {
       accessorKey: 'firstName',
