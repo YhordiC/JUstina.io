@@ -40,7 +40,6 @@ export function DataTable<TData, TValue>({ columns, data, isOpen, isFunction: is
 
   return (
     <div className='grid'>
-     
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
