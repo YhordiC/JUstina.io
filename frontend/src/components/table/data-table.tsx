@@ -17,11 +17,11 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   isOpen: boolean
-  isfuncion: {}
+  isFunction: {}
   perfilmedico: TData[]
 }
 
-export function DataTable<TData, TValue>({ columns, data, isOpen, isfuncion, perfilmedico }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, isOpen, isFunction: isfuncion, perfilmedico }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5

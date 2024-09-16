@@ -123,7 +123,7 @@ function MedicalsTable() {
     setOpenMP(!isOpenMperfil)
   }
 
-  return <DataTable columns={columns} data={medicals} isOpen={isOpenMperfil} isfuncion={cambiarisOpen} perfilmedico={perfilMedico} />
+  return <DataTable columns={columns} data={medicals} isOpen={isOpenMperfil} isFunction={cambiarisOpen} perfilmedico={perfilMedico} />
 }
 
 export { MedicalsTable }
