@@ -151,7 +151,7 @@ const dataMock = [
 ]
 
 function SocialWorksTable() {
-  return <DataTable columns={columns} data={dataMock} />
+  return <DataTable columns={columns} data={dataMock} isFunction={{}} isOpen perfilmedico={[]} />
 }
 
 export { SocialWorksTable }

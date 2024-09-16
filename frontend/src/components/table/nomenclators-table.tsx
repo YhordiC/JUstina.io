@@ -152,7 +152,7 @@ const dataMock = [
 ]
 
 function NomenclatorsTable() {
-  return <DataTable columns={columns} data={dataMock} />
+  return <DataTable columns={columns} data={dataMock} isFunction={{}} isOpen perfilmedico={[]} />
 }
 
 export { NomenclatorsTable }
