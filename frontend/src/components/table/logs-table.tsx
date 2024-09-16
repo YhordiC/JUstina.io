@@ -152,7 +152,7 @@ const dataMock = [
 ]
 
 function LogsTable() {
-  return <DataTable columns={columns} data={dataMock} />
+  return <DataTable isOpen isFunction={{}} perfilmedico={[]} key='0' columns={columns} data={dataMock} />
 }
 
 export { LogsTable }
