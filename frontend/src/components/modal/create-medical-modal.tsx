@@ -8,8 +8,9 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import { Loader2Icon } from 'lucide-react'
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '../ui/button'
@@ -17,6 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/input'
 import { toast } from '../ui/use-toast'
 import { TokenContext } from '@/context/TokenProvider'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 const medicalSchema = z.object({
   firstName: z.string().min(1, { message: 'El nombre es obligatorio' }),
@@ -29,13 +31,89 @@ const medicalSchema = z.object({
   medicalRegistrationNumber: z.coerce
     .number({ required_error: 'El número de identificación es obligatorio' })
     .positive({ message: 'El número de identificación debe ser positivo' }),
-  specialty: z.string().min(1, { message: 'El especialidad es obligatoria' }),
+  specialities: z.string().min(1, { message: 'El especialidad es obligatoria' }),
   description: z.string().min(1, { message: 'La descripción es obligatoria' }),
   active: z.boolean()
 })
 
+const especialidades = [
+  { label: 'Alergología e Inmunología', value: 'ALERGIA_E_INMUNOLOGIA' },
+  { label: 'Alergología e Inmunología Pediátrica', value: 'ALERGIA_E_INMUNOLOGIA_PEDIATRICA' },
+  { label: 'Anatomía Patológica', value: 'ANATOMIA_PATOLOGICA' },
+  { label: 'Anestesiología', value: 'ANESTESIOLOGIA' },
+  { label: 'Anestesiología General y Hemodinamia', value: 'ANESTESIOLOGIA_GENERAL_Y_HEMODINAMIA' },
+  { label: 'Cardiología', value: 'CARDIOLOGIA' },
+  { label: 'Cardiología Infantil', value: 'CARDIOLOGIA_INFANTIL' },
+  { label: 'Cirugía Cardiovascular', value: 'CIRUGIA_CARDIOVASCULAR' },
+  { label: 'Cirugía Cardiovascular Pediátrica', value: 'CIRUGIA_CARDIOVASCULAR_PEDIATRICA' },
+  { label: 'Cirugía de Cabeza y Cuello', value: 'CIRUGIA_CABEZA_Y_CUELLO' },
+  { label: 'Cirugía Torácica', value: 'CIRUGIA_TORACICA' },
+  { label: 'Cirugía Pediátrica', value: 'CIRUGIA_PEDIATRICA' },
+  { label: 'Cirugía Plástica y Reparadora', value: 'CIRUGIA_PLASTICA_Y_REPARADORA' },
+  { label: 'Cirugía Vascular Periférica', value: 'CIRUGIA_VASCULAR_PERIFERICA' },
+  { label: 'Clínica Médica', value: 'CLINICA_MEDICA' },
+  { label: 'Coloproctología', value: 'COLOPROCTOLOGIA' },
+  { label: 'Dermatología', value: 'DERMATOLOGIA' },
+  { label: 'Dermatología Pediátrica', value: 'DERMATOLOGIA_PEDIATRICA' },
+  { label: 'Diagnóstico por Imágenes', value: 'DIAGNOSTICO_POR_IMAGENES' },
+  { label: 'Electrofisiología Cardíaca', value: 'ELECTRO_FISIOLOGIA_CARDIACA' },
+  { label: 'Emergentología', value: 'EMERGENTOLOGIA' },
+  { label: 'Endocrinología', value: 'ENDOCRINOLOGIA' },
+  { label: 'Endocrinología Infantil', value: 'ENDOCRINOLOGIA_INFANTIL' },
+  { label: 'Farmacología Clínica', value: 'FARMACOLOGIA_CLINICA' },
+  { label: 'Fisiatría', value: 'FISIATRIA' },
+  { label: 'Gastroenterología', value: 'GASTROENTEROLOGIA' },
+  { label: 'Gastroenterología Infantil', value: 'GASTROENTEROLOGIA_INFANTIL' },
+  { label: 'Genética Médica', value: 'GENETICA_MEDICA' },
+  { label: 'Geriatría', value: 'GERIATRIA' },
+  { label: 'Ginecología', value: 'GINECOLOGOGIA' },
+  { label: 'Hematología', value: 'HEMATOLOGIA' },
+  { label: 'Hematooncología Pediátrica', value: 'HEMATOONCOLOGIA_PEDIATRICA' },
+  { label: 'Hemoterapia e Inmunohematología', value: 'HEMOTERAPIA_E_INMUNOHEMATOLOGIA' },
+  { label: 'Hepatología', value: 'HEPATOLOGIA' },
+  { label: 'Hepatología Pediátrica', value: 'HEPATOLOGIA_PEDIATRICA' },
+  { label: 'Infectología', value: 'INFECTOLOGIA' },
+  { label: 'Infectología Infantil', value: 'INFECTOLOGIA_INFANTIL' },
+  { label: 'Medicina del Deporte', value: 'MEDICINA_DEL_DEPORTE' },
+  { label: 'Medicina del Trabajo', value: 'MEDICINA_DEL_TRABAJO' },
+  { label: 'Medicina General', value: 'MEDICINA_GENERAL' },
+  { label: 'Medicina Legal', value: 'MEDICINA_LEGAL' },
+  { label: 'Medicina Nuclear', value: 'MEDICINA_NUCLEAR' },
+  { label: 'Medicina Paliativa', value: 'MEDICINA_PALIATIVA' },
+  { label: 'Nefrología', value: 'NEFROLOGIA' },
+  { label: 'Nefrología Infantil', value: 'NEFROLOGIA_INFANTIL' },
+  { label: 'Neonatología', value: 'NEONATOLOGIA' },
+  { label: 'Neumonología', value: 'NEUMONOLOGIA' },
+  { label: 'Neumonología Infantil', value: 'NEUMONOLOGIA_INFANTIL' },
+  { label: 'Neurocirugía', value: 'NEUROCIRUGIA' },
+  { label: 'Neurología', value: 'NEUROLOGIA' },
+  { label: 'Neurología Infantil', value: 'NEUROLOGIA_INFANTIL' },
+  { label: 'Nutrición', value: 'NUTRICION' },
+  { label: 'Nutrición Infantil', value: 'NUTRICION_INFANTIL' },
+  { label: 'Obstetricia', value: 'OBSTETRICIA' },
+  { label: 'Odontología', value: 'ODONTOLOGIA' },
+  { label: 'Oftalmología', value: 'OFTALMOLOGIA' },
+  { label: 'Oncología', value: 'ONCOLOGIA' },
+  { label: 'Ortopedia y Traumatología', value: 'ORTOPEDIA_Y_TRAUMATOLOGIA' },
+  { label: 'Ortopedia y Traumatología Infantil', value: 'ORTOPEDIA_Y_TRAUMATOLOGIA_INFANTIL' },
+  { label: 'Otorrinolaringología', value: 'OTORRINOLARINGOLOGIA' },
+  { label: 'Pediatría', value: 'PEDIATRIA' },
+  { label: 'Psicología', value: 'PSICOLOGIA' },
+  { label: 'Psiquiatría', value: 'PSIQUIATRIA' },
+  { label: 'Psiquiatría Infantojuvenil', value: 'PSIQUIATRIA_INFANTOJUVENIL' },
+  { label: 'Radioterapia', value: 'RADIOTERAPIA' },
+  { label: 'Reumatología', value: 'REUMATOLOGIA' },
+  { label: 'Reumatología Infantil', value: 'REUMATOLOGIA_INFANTIL' },
+  { label: 'Terapia Intensiva', value: 'TERAPIA_INTENSIVA' },
+  { label: 'Terapia Intensiva Infantil', value: 'TERAPIA_INTENSIVA_INFANTIL' },
+  { label: 'Tocoginecología', value: 'TOCOGINECOLOGIA' },
+  { label: 'Toxicología', value: 'TOXICOLOGIA' },
+  { label: 'Urología', value: 'UROLOGIA' }
+]
+
 function CreateMedicalModal() {
   const token = useContext(TokenContext) // contexto de token
+  const [Especialidades, setEspecilaidades] = useState(especialidades)
   const [isOpen, setIsOpen] = useState(false)
   const form = useForm<z.infer<typeof medicalSchema>>({
     resolver: zodResolver(medicalSchema),
@@ -46,7 +124,7 @@ function CreateMedicalModal() {
       password: '',
       phone: 0,
       medicalRegistrationNumber: 0,
-      specialty: '',
+      specialities: '',
       description: '',
       active: true
     }
@@ -54,7 +132,7 @@ function CreateMedicalModal() {
 
   const onSubmit = async (data: z.infer<typeof medicalSchema>) => {
     try {
-      await fetch('https://backend-justina-deploy.onrender.com/v1/api/medical-staff/register', {
+      await fetch('https://backend-justina-deploy.onrender.com/api/medical/add', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -163,14 +241,22 @@ function CreateMedicalModal() {
             />
             <FormField
               control={form.control}
-              name='specialty'
+              name='specialities'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Especialidad</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Cirugía general' {...field} />
-                  </FormControl>
-                  <FormMessage />
+                  <FormLabel>Sexo</FormLabel>
+                  <Select onValueChange={(value) => field.onChange(value)} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Selecciona una especialidad' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {Especialidades.map( item => (
+                        <SelectItem key={item.label} value={item.value}>{item.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormItem>
               )}
             />

@@ -34,7 +34,7 @@ export default function Login() {
     if (role === 'ROLE_PATIENT') {
       router.push('/dashboard-paciente')
       return
-    } else if (role === 'ROLE_ADMIN') {
+    } else if (role === 'ADMIN') {
       router.push('/dashboard')
       return
     }
@@ -45,7 +45,7 @@ export default function Login() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true)
     try {
-      const response = await fetch('https://backend-justina-deploy.onrender.com/v1/api/login',{
+      const response = await fetch('https://backend-justina-deploy.onrender.com/api/login',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

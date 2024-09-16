@@ -2,6 +2,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import PerfilMedical from './Perfil-medical'
 import {
   ColumnDef,
   flexRender,
@@ -15,9 +16,12 @@ import { useState } from 'react'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  isOpen: boolean
+  isfuncion: {}
+  perfilmedico: TData[]
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, isOpen, isfuncion, perfilmedico }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5
@@ -36,6 +40,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
   return (
     <div className='grid'>
+     
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -76,6 +81,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           Siguiente
         </Button>
       </div>
+      {isOpen ? <PerfilMedical isOPen={isOpen} onCheneClose={isfuncion} perfilmedico={perfilmedico} /> : ''}
     </div>
   )
 }

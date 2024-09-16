@@ -12,6 +12,7 @@ export interface Medical {
 }
 
 export interface Patient {
+  id: any
   idPatient: number
   birthDate: Date
   bloodFactor: string
