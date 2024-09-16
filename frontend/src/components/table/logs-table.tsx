@@ -152,7 +152,20 @@ const dataMock = [
 ]
 
 function LogsTable() {
-  return <DataTable isOpen isFunction={{}} perfilmedico={[]} key='0' columns={columns} data={dataMock} />
+  return (
+    <DataTable isOpen isfuncion={{}} perfilmedico={[
+      {
+        firstName: 'Nonbre',
+        lastName: 'APellido',
+        description: 'MI vida es salud',
+        email: 'a@gamil.com',
+        phone: '5452121515',
+        medicalRegistrationNumber: 5452121,
+        specialities: 'CIrujano'
+      }
+    ]} key='0' columns={columns} data={dataMock}
+    />
+  )
 }
 
 export { LogsTable }
