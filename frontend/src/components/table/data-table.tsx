@@ -13,15 +13,26 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   isOpen: boolean
-  isFunction: {}
-  perfilmedico: TData[]
+  isfuncion: {}
+  perfilmedico: [
+    {
+      firstName: 'Nonbre'
+      lastName: 'APellido'
+      description: 'MI vida es salud'
+      email: 'a@gamil.com'
+      phone: '5452121515'
+      medicalRegistrationNumber: 5452121
+      specialities: 'CIrujano'
+    }
+  ]
 }
 
-export function DataTable<TData, TValue>({ columns, data, isOpen, isFunction: isfuncion, perfilmedico }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, isOpen, isfuncion, perfilmedico }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5

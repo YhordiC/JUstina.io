@@ -19,7 +19,7 @@ const Perfilmedico = [
     specialities: 'CIrujano'
   }
 ]
-export default function PerfilMedical({ isOPen = true, onCheneClose = () => { console.log('nada') }, perfilmedico = Perfilmedico }) {
+export default function PerfilMedical({ isOPen = true, onCheneClose = {}, perfilmedico = Perfilmedico }) {
   return (
     <Dialog open={isOPen} onOpenChange={onCheneClose}>
       <DialogContent>
