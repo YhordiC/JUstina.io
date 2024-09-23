@@ -151,7 +151,21 @@ const dataMock = [
 ]
 
 function SocialWorksTable() {
-  return <DataTable columns={columns} data={dataMock} isFunction={{}} isOpen perfilmedico={[]} />
+  return (
+    <DataTable
+      columns={columns} data={dataMock} isfuncion={{}} isOpen perfilmedico={[
+        {
+          firstName: 'Nonbre',
+          lastName: 'APellido',
+          description: 'MI vida es salud',
+          email: 'a@gamil.com',
+          phone: '5452121515',
+          medicalRegistrationNumber: 5452121,
+          specialities: 'CIrujano'
+        }
+      ]}
+    />
+  )
 }
 
 export { SocialWorksTable }
