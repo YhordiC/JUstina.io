@@ -16,7 +16,7 @@ import { useContext, useEffect, useState } from 'react'
 
 function PatientsTable() {
   const [isOpenMperfil, setOpenMP] = useState(false)
-  const [perfilPaciente, setPerfilPaciente] = useState<Patient[]>([])
+  const [perfilPaciente, setPerfilPaciente] = useState<object[]>([])
   const columns: ColumnDef<Patient>[] = [
     {
       accessorKey: 'firstName',
@@ -67,7 +67,7 @@ function PatientsTable() {
         function CloseandOPenMP() {
           setOpenMP(!isOpenMperfil)
           const perfilpaciente = patients.filter(paciente => paciente.id === Paciente.id)
-        setPerfilPaciente(perfilpaciente)
+          setPerfilPaciente(perfilpaciente)
         }
         return (
           <DropdownMenu>
@@ -91,7 +91,7 @@ function PatientsTable() {
     }
   ]
   const [patients, setPatients] = useState<Patient[]>([])
-  const token = useContext(TokenContext) || '' // contexto de token;
+  const token = useContext(TokenContext) // contexto de token;
   useEffect(() => {
     const Token = localStorage.getItem('token') ?? ''
     const getPatients = async () => {

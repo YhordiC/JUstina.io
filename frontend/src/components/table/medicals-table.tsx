@@ -14,31 +14,33 @@ import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from '../ui/use-toast'
 import { TokenContext } from '@/context/TokenProvider'
-import PerfilMediclal from '@/components/table/Perfil-medical'
 
 function MedicalsTable() {
-  const Token = useContext(TokenContext) || '' // contexto de token
+  const Token: string = useContext(TokenContext) // contexto de token
   const [isOpenMperfil, setOpenMP] = useState(false)
-  const [perfilMedico, setPerfilMedico] = useState<Medical[]>([])
+  const [perfilMedico, setPerfilMedico] = useState<object[]>([])
 
-  
   const columns: ColumnDef<Medical>[] =
   [
     {
       accessorKey: 'firstName',
-      header: 'Nombre'
+      header: 'Nombre',
+      accessorFn: row => row.firstName
     },
     {
       accessorKey: 'lastName',
-      header: 'Apellido'
+      header: 'Apellido',
+      accessorFn: row => row.lastName
     },
     {
       accessorKey: 'email',
-      header: 'Email'
+      header: 'Email',
+      accessorFn: row => row.email
     },
     {
       accessorKey: 'phone',
-      header: 'Teléfono'
+      header: 'Teléfono',
+      accessorFn: row => row.phone
     },
     {
       accessorKey: 'medicalRegistrationNumber',
@@ -47,7 +49,8 @@ function MedicalsTable() {
     },
     {
       accessorKey: 'specialities',
-      header: 'Especialidades'
+      header: 'Especialidades',
+      accessorFn: row => row.specialities
     },
     {
       accessorKey: 'active',
@@ -78,7 +81,6 @@ function MedicalsTable() {
                 'Content-Type': 'application/json'
               }
             })
-  
             toast({ title: '¡Se ha desactivado el médico!' })
           } catch (error) {
             toast({ title: 'Ha ocurrido un error al eliminar el médico' })
@@ -119,7 +121,7 @@ function MedicalsTable() {
       .then(async res => await res.json())
       .then(data => setMedicals(data.dataIterable))
   }, [])
-  function cambiarisOpen() {
+  function cambiarisOpen(): void {
     setOpenMP(!isOpenMperfil)
   }
 

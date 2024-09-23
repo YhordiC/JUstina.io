@@ -1,6 +1,7 @@
 /* eslint-disable multiline-ternary */
 'use client'
 import { Button } from '@/components/ui/button'
+import { Medical } from '@/tipos/database'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import PerfilMedical from './Perfil-medical'
 import {
@@ -13,26 +14,38 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  isOpen: boolean
-  isfuncion: {}
-  perfilmedico: [
-    {
-      firstName: 'Nonbre'
-      lastName: 'APellido'
-      description: 'MI vida es salud'
-      email: 'a@gamil.com'
-      phone: '5452121515'
-      medicalRegistrationNumber: 5452121
-      specialities: 'CIrujano'
-    }
-  ]
+interface perfilmedico {
+  firstName: string
+  lastName: string
+  description: string
+  email: string
+  phone: string
+  medicalRegistrationNumber: number
+  specialities: string
+  active: boolean
 }
-
-export function DataTable<TData, TValue>({ columns, data, isOpen, isfuncion, perfilmedico }: DataTableProps<TData, TValue>) {
+interface perficiente {
+  firstName: string
+  lastName: string
+  description: string
+  email: string
+  identificationNumber: string
+  phone: string
+  birthDate: string
+  bloodType: string
+  bloodFactor: string
+  sex: string
+  active: boolean
+}
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue> []
+  data: TData[]
+  isOpen?: boolean
+  isfuncion: () => void
+  perficiente: perfilmedico | perficiente
+  Roll: string
+}
+export function DataTable<TData, TValue>({ columns, data, isOpen, isfuncion, perficiente, Roll = 'medico' }: DataTableProps<TData, TValue>) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5
@@ -91,7 +104,7 @@ export function DataTable<TData, TValue>({ columns, data, isOpen, isfuncion, per
           Siguiente
         </Button>
       </div>
-      {isOpen ? <PerfilMedical isOPen={isOpen} onCheneClose={isfuncion} perfilmedico={perfilmedico} /> : ''}
+      {isOpen ? <PerfilMedical isOPen={isOpen} onCheneClose={isfuncion} Perfilmedico={perficiente} Rol={Roll} /> : ''}
     </div>
   )
 }
