@@ -1,6 +1,5 @@
 import { AdminDashboardAside, DashboardHeader } from '@/components'
 import { Toaster } from '@/components/ui/toaster'
-import TokenProvider from '@/context/TokenProvider'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -8,8 +7,7 @@ interface DashboardLayoutProps {
 
 function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-  <TokenProvider>
-<div className='grid min-h-screen md:grid-cols-[13.75rem_1fr] lg:grid-cols-[17.5rem_1fr]'>
+    <div className='grid min-h-screen md:grid-cols-[13.75rem_1fr] lg:grid-cols-[17.5rem_1fr]'>
       <AdminDashboardAside />
       <div className='flex flex-col'>
         <DashboardHeader />
@@ -17,8 +15,6 @@ function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
       <Toaster />
     </div>
-  </TokenProvider>
-    
   )
 }
 

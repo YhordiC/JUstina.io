@@ -14,14 +14,12 @@ import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from '../ui/use-toast'
 import { TokenContext } from '@/context/TokenProvider'
-import PerfilMediclal from '@/components/table/Perfil-medical'
 
 function MedicalsTable() {
-  const Token = useContext(TokenContext) || '' // contexto de token
+  const Token: string = useContext(TokenContext) || '' // contexto de token
   const [isOpenMperfil, setOpenMP] = useState(false)
   const [perfilMedico, setPerfilMedico] = useState<Medical[]>([])
 
-  
   const columns: ColumnDef<Medical>[] =
   [
     {
@@ -78,7 +76,6 @@ function MedicalsTable() {
                 'Content-Type': 'application/json'
               }
             })
-  
             toast({ title: '¡Se ha desactivado el médico!' })
           } catch (error) {
             toast({ title: 'Ha ocurrido un error al eliminar el médico' })
