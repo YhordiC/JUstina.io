@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -16,7 +15,7 @@ import TiposSangreRadio from '@/components/ui/Perfil/TiposSangreRadio'
 import { jwtDecode } from 'jwt-decode'
 
 export default function Perfilpage() {
-  let [form] =  FormValues()
+  const [form] = FormValues()
   const [formSchema] = Formshema()
   // eslint-disable-next-line react-hooks/rules-of-hooks
   function onSubmit(values: z.infer<typeof formSchema>) {
