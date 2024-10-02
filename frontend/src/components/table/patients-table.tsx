@@ -8,10 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { TokenContext } from '@/context/TokenProvider'
 import { Patient } from '@/tipos/database'
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 function PatientsTable() {
   const [isOpenMperfil, setOpenMP] = useState(false)
@@ -90,22 +91,14 @@ function PatientsTable() {
     }
   ]
   const [patients, setPatients] = useState<Patient[]>([])
-<<<<<<< HEAD
   const token = useContext(TokenContext) || '' // contexto de token;
-=======
-
->>>>>>> parent of 80159c0 (mas)
   useEffect(() => {
     const Token = localStorage.getItem('token') ?? ''
     const getPatients = async () => {
       const request = await fetch('https://backend-justina-deploy.onrender.com/api/patient', {
         method: 'GET',
         headers: {
-<<<<<<< HEAD
-          Authorization: `Bearer ${Token}`
-=======
           Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`
->>>>>>> parent of 80159c0 (mas)
         }
       })
       const patients = await request.json()
